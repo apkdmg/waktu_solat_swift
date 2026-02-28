@@ -41,6 +41,31 @@ Then add dependency to your target:
 .product(name: "WaktuSolatSwift", package: "waktu_solat_swift")
 ```
 
+## Installation (CocoaPods)
+
+Add this in your `Podfile`:
+
+```ruby
+platform :ios, '15.0'
+use_frameworks!
+
+target 'YourAppTarget' do
+  pod 'WaktuSolatSwift', :git => 'https://github.com/apkdmg/waktu_solat_swift.git', :branch => 'main'
+end
+```
+
+Then run:
+
+```bash
+pod install
+```
+
+If you publish this pod to CocoaPods trunk, consumers can use:
+
+```ruby
+pod 'WaktuSolatSwift'
+```
+
 ## Quick Start
 
 ```swift
@@ -161,3 +186,16 @@ A native SwiftUI example app (aligned with the Flutter example flow) is included
 - `ExampleIOSApp/WaktuSolatSwiftExample.xcodeproj`
 
 Open it in Xcode and run the `WaktuSolatSwiftExample` scheme.
+
+## CocoaPods Files
+
+This repo includes:
+
+- `WaktuSolatSwift.podspec`
+
+For trunk publishing (maintainer only), typical flow:
+
+```bash
+pod spec lint WaktuSolatSwift.podspec --allow-warnings
+pod trunk push WaktuSolatSwift.podspec --allow-warnings
+```
