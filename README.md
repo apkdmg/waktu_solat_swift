@@ -32,7 +32,7 @@
 ### Package.swift
 
 ```swift
-.package(url: "https://github.com/<your-username>/waktu_solat_swift.git", branch: "main")
+.package(url: "https://github.com/apkdmg/waktu_solat_swift.git", branch: "main")
 ```
 
 Then add dependency to your target:
