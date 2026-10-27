@@ -26,13 +26,13 @@
 
 1. Open your project in Xcode.
 2. Go to `File > Add Package Dependencies...`
-3. Add your repository URL.
+3. Enter `https://github.com/apkdmg/waktu_solat_swift.git` and set **Dependency Rule** to **Up to Next Major Version** from `1.0.1`.
 4. Select product `WaktuSolatSwift`.
 
 ### Package.swift
 
 ```swift
-.package(url: "https://github.com/apkdmg/waktu_solat_swift.git", branch: "main")
+.package(url: "https://github.com/apkdmg/waktu_solat_swift.git", from: "1.0.1")
 ```
 
 Then add dependency to your target:
@@ -50,7 +50,7 @@ platform :ios, '15.0'
 use_frameworks!
 
 target 'YourAppTarget' do
-  pod 'WaktuSolatSwift', :git => 'https://github.com/apkdmg/waktu_solat_swift.git', :branch => 'main'
+  pod 'WaktuSolatSwift', :git => 'https://github.com/apkdmg/waktu_solat_swift.git', :tag => '1.0.1'
 end
 ```
 
@@ -186,6 +186,13 @@ A native SwiftUI example app (aligned with the Flutter example flow) is included
 - `ExampleIOSApp/WaktuSolatSwiftExample.xcodeproj`
 
 Open it in Xcode and run the `WaktuSolatSwiftExample` scheme.
+
+## Other platforms
+
+The same API client is also available for:
+
+- **Flutter / Dart:** [waktu_solat_lib](https://pub.dev/packages/waktu_solat_lib) on pub.dev ([GitHub](https://github.com/apkdmg/waktu_solat_lib))
+- **Android / Kotlin:** [waktu_solat_android](https://github.com/apkdmg/waktu_solat_android), via JitPack (`com.github.apkdmg:waktu_solat_android`)
 
 ## CocoaPods Files
 
