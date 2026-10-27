@@ -13,27 +13,22 @@ public final class WaktuSolatClient {
     }
 
     /// Fetches all Malaysian states and their corresponding zone codes.
+    ///
+    /// The API no longer has a states endpoint (`/v2/negeri` returns 404), so this
+    /// groups the `/zones` response by `negeri`, in the order the API returns them.
     public func getStates() async throws -> [WaktuState] {
-        let response = try await getRequest(endpoint: "/v2/negeri")
+        let zones = try await getZones()
 
-        guard let list = response as? [Any] else {
-            throw WaktuSolatApiException(
-                "Unexpected response format received for /v2/negeri. Expected a List."
-            )
-        }
-
-        do {
-            return try list.map { item in
-                guard let object = item as? [String: Any] else {
-                    throw DecodingError.dataCorrupted(
-                        .init(codingPath: [], debugDescription: "Expected object inside state list")
-                    )
-                }
-                return try decode(WaktuState.self, from: object)
+        var order: [String] = []
+        var zonesByState: [String: [String]] = [:]
+        for zone in zones {
+            if zonesByState[zone.negeri] == nil {
+                order.append(zone.negeri)
             }
-        } catch {
-            throw WaktuSolatApiException("Failed to parse states list: \(error)")
+            zonesByState[zone.negeri, default: []].append(zone.jakimCode)
         }
+
+        return order.map { WaktuState(negeri: $0, zones: zonesByState[$0] ?? []) }
     }
 
     /// Fetches all prayer zones with state and district details.

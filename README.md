@@ -4,7 +4,7 @@
 
 ## Features
 
-- Fetch all states (`/v2/negeri`)
+- Fetch all states with their zone codes (built from `/zones`)
 - Fetch all zones with daerah/negeri (`/zones`)
 - Fetch monthly prayer times by zone (`/v2/solat/{zone}`)
 - Fetch monthly prayer times by GPS (`/v2/solat/gps/{lat}/{long}`)

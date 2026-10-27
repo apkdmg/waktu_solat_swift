@@ -58,12 +58,15 @@ final class WaktuSolatClientTests: XCTestCase {
         super.tearDown()
     }
 
-    func testGetStatesReturnsListOnSuccess() async throws {
-        let url = "https://api.waktusolat.app/v2/negeri"
+    func testGetStatesGroupsZonesByState() async throws {
+        // getStates is built from /zones, since the API no longer serves /v2/negeri.
+        let url = "https://api.waktusolat.app/zones"
         let json = """
         [
-          {"negeri":"JOHOR","zones":["jhr01","jhr02","jhr03","jhr04"]},
-          {"negeri":"KEDAH","zones":["kdh01","kdh02","kdh03","kdh04","kdh05","kdh06","kdh07"]}
+          {"jakimCode":"JHR01","negeri":"Johor","daerah":"Pulau Aur dan Pulau Pemanggil"},
+          {"jakimCode":"JHR02","negeri":"Johor","daerah":"Johor Bahru, Kota Tinggi, Mersing, Kulai"},
+          {"jakimCode":"KDH01","negeri":"Kedah","daerah":"Kota Setar, Kubang Pasu, Pokok Sena"},
+          {"jakimCode":"KDH02","negeri":"Kedah","daerah":"Kuala Muda, Yan, Pendang"}
         ]
         """
 
@@ -71,15 +74,14 @@ final class WaktuSolatClientTests: XCTestCase {
 
         let states = try await client.getStates()
 
-        XCTAssertEqual(states.count, 2)
-        XCTAssertEqual(states[0].negeri, "JOHOR")
-        XCTAssertTrue(states[0].zones.contains("jhr01"))
-        XCTAssertEqual(states[1].negeri, "KEDAH")
-        XCTAssertTrue(states[1].zones.contains("kdh01"))
+        XCTAssertEqual(states, [
+            WaktuState(negeri: "Johor", zones: ["JHR01", "JHR02"]),
+            WaktuState(negeri: "Kedah", zones: ["KDH01", "KDH02"])
+        ])
     }
 
     func testGetStatesThrowsOnServerError() async {
-        let url = "https://api.waktusolat.app/v2/negeri"
+        let url = "https://api.waktusolat.app/zones"
         setMockResponse(expectedURL: url, statusCode: 500, body: "{\"message\":\"Server Error\"}")
 
         do {
@@ -93,7 +95,7 @@ final class WaktuSolatClientTests: XCTestCase {
     }
 
     func testGetStatesThrowsOnNetworkError() async {
-        let url = "https://api.waktusolat.app/v2/negeri"
+        let url = "https://api.waktusolat.app/zones"
         setMockError(expectedURL: url, error: URLError(.notConnectedToInternet))
 
         do {
