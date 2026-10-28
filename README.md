@@ -187,6 +187,12 @@ A native SwiftUI example app (aligned with the Flutter example flow) is included
 
 Open it in Xcode and run the `WaktuSolatSwiftExample` scheme.
 
+## Credits
+
+This library uses the [Malaysia Prayer Time API](https://api.waktusolat.app/docs) created by [Muhammad Fareez Iqmal](https://iqfareez.com/about), a Software Engineer specializing in Flutter, Laravel, and .NET technologies. The API provides accurate prayer times data for all locations in Malaysia.
+
+The data is collected from [e-solat JAKIM](https://www.e-solat.gov.my/) and stored in a database to maintain stability and availability. For more technical information, visit the API repository at [https://github.com/mptwaktusolat/api-waktusolat](https://github.com/mptwaktusolat/api-waktusolat).
+
 ## Other platforms
 
 The same API client is also available for:
